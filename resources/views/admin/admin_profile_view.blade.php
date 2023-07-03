@@ -1,6 +1,7 @@
 @extends('admin.admin_dashboard')
 @section('admin')
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 
 33<div class="page-content">
 
@@ -13,7 +14,7 @@
             <div class="d-flex align-items-center justify-content-between mb-2">
               
               <div>
-                <img class="wd-100 rounded-circle" src="{{!empty($profileData->photo) ? url('img/admin_image/'.$profile->photo) : url('upload/img/no_image.jpg')}}" alt="profile">
+                <img class="wd-100 rounded-circle" src="{{!empty($profileData->photo) ? url('upload/img/admin_image/'.$profileData->photo) : url('upload/img/no_image.jpg')}}" alt="profile">
                 <span class="h4 ms-3 text-dark">{{$profileData->username}}</span>
               </div>
               
@@ -31,15 +32,9 @@
               <p class="text-muted">{{ $profileData->phone }}</p>
             </div>
             
-            <div class="mt-3">
-              <label class="tx-11 fw-bolder mb-0 text-uppercase">Photo:</label>
-              <input class="form-control" id='photo' type="file" id="formFile">
-            </div>
+            
 
-            <div>
-              <img class="wd-100 rounded-circle" src="{{!empty($profileData->photo) ? url('img/admin_image/'.$profile->photo) : url('upload/img/no_image.jpg')}}" alt="profile">
-              <span class="h4 ms-3 text-dark">{{$profileData->username}}</span>
-            </div>
+            
 
             <div class="mt-3 d-flex social-links">
               <a href="javascript:;" class="btn btn-icon border btn-xs me-2">
@@ -65,18 +60,40 @@
   
                                   <h6 class="card-title">Basic Form</h6>
   
-                                  <form class="forms-sample">
-                                      <div class="mb-3">
+                                  <form class="forms-sample" method="POST" action="{{ route('admin.profile.store') }}" enctype="multipart/form-data">
+                                    
+                                    @csrf  
+                                    
+                                    <div class="mb-3">
                                           <label for="exampleInputUsername1" class="form-label">Username</label>
-                                          <input type="text" class="form-control" id="exampleInputUsername1" autocomplete="off" placeholder="Username">
+                                          <input type="text" class="form-control" id="exampleInputUsername1" name="name" autocomplete="off" placeholder="name" value="{{ $profileData->name}}">
                                       </div>
                                       <div class="mb-3">
                                           <label for="exampleInputEmail1" class="form-label">Email address</label>
-                                          <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                                          <input type="email" class="form-control" id="exampleInputEmail1" name="email" placeholder="Email" value="{{ $profileData->email }}">
                                       </div>
+                                      
+
                                       <div class="mb-3">
-                                          <label for="exampleInputPassword1" class="form-label">Password</label>
-                                          <input type="password" class="form-control" id="exampleInputPassword1" autocomplete="off" placeholder="Password">
+                                        <label for="exampleInputPassword1" class="form-label">Address</label>
+                                        <input type="password" class="form-control" id="exampleInputPassword1" name="address" autocomplete="off" placeholder="Address">
+                                    </div>
+
+                                    <div class="mb-3">
+                                      <label for="exampleInputPassword1" class="form-label">Phone Number</label>
+                                      <input type="password" class="form-control" id="exampleInputPassword1" name="phone" autocomplete="off" placeholder="Phone Number">
+                                  </div>
+
+                                      <div class="mt-3">
+                                        <label class="tx-11 fw-bolder mb-0 text-uppercase">Photo:</label>
+                                        <input class="form-control" id='photo' name="photo" type="file" id="formFile">
+                                      </div>
+
+                                      
+
+                                      <div>
+                                        <img class="wd-100 rounded-circle" id="showimage" src="{{!empty($profileData->photo) ? url('upload/img/admin_image/'.$profileData->photo) : url('upload/img/no_image.jpg')}}" alt="profile">
+                                        <span class="h4 ms-3 text-dark">{{$profileData->username}}</span>
                                       </div>
                                       <div class="form-check mb-3">
                       <input type="checkbox" class="form-check-input" id="exampleCheck1">
@@ -101,6 +118,18 @@
     </div>
 
         </div>
+
+        <script>
+          $(document).ready(function(){
+            $('#photo').change(function(e){
+              let reader = new FileReader();
+              reader.onload = function(e){
+                $('#showimage').attr('src',e.target.result);
+              }
+              reader.readAsDataURL(e.target.files[0]);
+            });
+          });
+        </script>
 
 
 
