@@ -40,7 +40,7 @@ Route::middleware(['auth','role:admin'])->group(function(){
     Route::post('/admin/profile/store',[admincontroller::class,'adminProfileStore'])->name('admin.profile.store');
     Route::get('/admin/profile/password',[admincontroller::class,'adminprofilepassword'])->name('admin.profile.password');
 
-    Route::post('/admin/profile/updatepassword',[admincontroller::class,'adminupdateprofile'])->name('admin.updateprofile.password');
+    Route::post('/admin/profile/updatepassword',[admincontroller::class,'AdminUpdatePassword'])->name('admin.updateprofile.password');
 
 
 });

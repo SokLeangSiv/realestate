@@ -1,6 +1,8 @@
 @extends('admin.admin_dashboard')
 @section('admin')
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
 
     33<div class="page-content">
 
@@ -80,17 +82,16 @@
 
                             <h6 class="card-title">Change Password</h6>
 
-                            <form class="forms-sample" method="POST" action="{{ route('admin.profile.store') }}"
-                                enctype="multipart/form-data">
+                            <form class="forms-sample" method="POST" action="{{ route('admin.updateprofile.password') }}">
 
                                 @csrf
 
                                 <div class="mb-3">
                                     <label for="exampleInputUsername1" class="form-label">password</label>
                                     <input type="password" class="form-control @error('old_password') is-invalid @enderror"
-                                        id="old-password" name="old-password" autocomplete="off" placeholder="Old Password">
+                                        id="old-password" name="old_password" autocomplete="off" placeholder="Old Password">
 
-                                    @error('old-password')
+                                    @error('old_password')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -98,9 +99,9 @@
                                 <div class="mb-3">
                                     <label for="exampleInputUsername1" class="form-label">New Password</label>
                                     <input type="password" class="form-control @error('new_password') is-invalid @enderror"
-                                        id="new-password" name="new-password" autocomplete="off" placeholder="New Password">
+                                        id="new_password" name="new_password" autocomplete="off" placeholder="New Password">
 
-                                    @error('new-password')
+                                    @error('new_password')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -109,7 +110,7 @@
                                 <div class="mb-3">
                                     <label for="exampleInputUsername1" class="form-label">New Password Confrimation</label>
                                     <input type="password" class="form-control"
-                                        id="new-password-confrimation" name="new-password-confrimation" autocomplete="off" placeholder="New Password Confrimation">
+                                        id="new_password_confrimation" name="new_password_confrimation" autocomplete="off" placeholder="New Password Confrimation">
                                 </div>
 
                                 <button type="submit" class="btn btn-primary me-2">Submit</button>
@@ -125,4 +126,27 @@
 
 
         </div>
+
+        <script>
+            @if(Session::has('message'))
+            var type = "{{ Session::get('alert-type','info') }}"
+            switch(type){
+               case 'info':
+               toastr.info(" {{ Session::get('message') }} ");
+               break;
+           
+               case 'success':
+               toastr.success(" {{ Session::get('message') }} ");
+               break;
+           
+               case 'warning':
+               toastr.warning(" {{ Session::get('message') }} ");
+               break;
+           
+               case 'error':
+               toastr.error(" {{ Session::get('message') }} ");
+               break; 
+            }
+            @endif 
+           </script>
     @endsection

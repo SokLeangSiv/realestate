@@ -69,32 +69,43 @@ class adminController extends Controller
         return view('admin.body.admin_password_change',compact('profileData'));
     }
 
-    public function adminupdateprofile(Request $request){
+    public function AdminUpdatePassword(Request $request){
 
+        // Validation 
         $request->validate([
-            'old_password'=>'required',
-            'new_password' => 'required|confirmed|min:8'
+            'old_password' => 'required',
+            'new_password' => 'required|confirmed'
+
         ]);
 
-        if(!Hash::check($request->old_password,Auth::user()->password)){
-            $notification = array(
-                'message' => 'Old Password Does Not Match',
-                'alert-type' => 'error'
-            );
+        /// Match The Old Password
 
-            return back()->with($notification);
-        }
-        
-        User::whereId(Auth::user()->id)->update([
-            'password'=>Hash::make($request->new_password)
-        ]);
+        if (!Hash::check($request->old_password, auth()->user()->password)) {
 
-        $notification = array(
-            'message' => 'Password Updated Successfully',
-            'alert-type' => 'success'
+           $notification = array(
+            'message' => 'Old Password Does not Match!',
+            'alert-type' => 'error'
         );
 
         return back()->with($notification);
+        }
 
-    }
+        /// Update The New Password 
+
+        User::whereId(auth()->user()->id)->update([
+            'password' => Hash::make($request->new_password)
+
+        ]);
+
+         $notification = array(
+            'message' => 'Password Change Successfully',
+            'alert-type' => 'success'
+        );
+
+        return back()->with($notification); 
+
+     }// End Method 
+
+
 }
+
