@@ -126,6 +126,7 @@
 
 
         </div>
+    </div>
 
         <script>
             @if(Session::has('message'))
