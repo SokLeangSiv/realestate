@@ -25,13 +25,20 @@ License: For each use you must have a valid license purchased only from above li
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
   <!-- End fonts -->
 
+  {{-- input tag link --}}
+
+  <link rel="stylesheet" href="{{ asset('backend/assets/vendors/select2/select2.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('backend/assets/vendors/jquery-tags-input/jquery.tagsinput.min.css') }}">
+  {{-- input tag link --}}
+
 	<!-- core:css -->
 	<link rel="stylesheet" href="{{asset('backend/assets/vendors/core/core.css')}}">
 	<!-- endinject -->
-
 	<!-- Plugin css for this page -->
 	<link rel="stylesheet" href="{{asset('backend/assets/vendors/flatpickr/flatpickr.min.css')}}">
 	<!-- End plugin css for this page -->
+
+	<link rel="stylesheet" href="{{ asset('backend/assets/vendors/datatables.net-bs5/dataTables.bootstrap5.css') }}">
 
 	<!-- inject:css -->
 	<link rel="stylesheet" href="{{asset('backend/assets/fonts/feather-font/css/iconfont.css')}}">
@@ -79,6 +86,9 @@ License: For each use you must have a valid license purchased only from above li
   <script src="{{asset('backend/assets/vendors/apexcharts/apexcharts.min.js')}}"></script>
 	<!-- End plugin js for this page -->
 
+	<script src="{{ asset('backend/assets/vendors/datatables.net/jquery.dataTables.js') }}"></script>
+	<script src="{{ asset('backend/assets/vendors/datatables.net-bs5/dataTables.bootstrap5.js') }}"></script>
+
 	<!-- inject:js -->
 	<script src="{{asset('backend/assets/vendors/feather-icons/feather.min.js')}}"></script>
 	<script src="{{asset('backend/assets/js/template.js')}}"></script>
@@ -86,11 +96,32 @@ License: For each use you must have a valid license purchased only from above li
 
 	<!-- Custom js for this page -->
   <script src="{{asset('backend/assets/js/dashboard-dark.js')}}"></script>
+  <script src="{{asset('backend/assets/js/validate.min.js')}}"></script>
 	<!-- End custom js for this page -->
 
 
+  {{-- input tag --}}
+
+  <script src="{{ asset('backend/assets/vendors/inputmask/jquery.inputmask.min.js') }}"></script>
+	<script src="{{ asset('backend/assets/vendors/select2/select2.min.js') }}"></script>
+	<script src="{{ asset('backend/assets/vendors/typeahead.js/typeahead.bundle.min.js') }}"></script>
+	<script src="{{ asset('backend/assets/vendors/jquery-tags-input/jquery.tagsinput.min.js') }}"></script>
+  {{-- input tag --}}
+
+  {{-- input and show tag --}}
+  <script src="{{ asset('backend/assets/js/inputmask.js') }}"></script>
+	<script src="{{ asset('backend/assets/js/select2.js') }}"></script>
+	<script src="{{ asset('backend/assets/js/typeahead.js') }}"></script>
+	<script src="{{ asset('backend/assets/js/tags-input.js') }}"></script>
+  {{-- input and show tag --}}
+
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+ <script src="{{ asset('backend/assets/js/code.js') }}"></script>
+
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
+	<script src="{{ asset('backend/assets/js/data-table.js') }}"></script>
 <script>
  @if(Session::has('message'))
  var type = "{{ Session::get('alert-type','info') }}"
@@ -112,6 +143,45 @@ License: For each use you must have a valid license purchased only from above li
     break; 
  }
  @endif 
+
+ $(function(){
+    $(document).on('click','#delete',function(e){
+        e.preventDefault();
+        var link = $(this).attr("href");
+
+  
+                  Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Delete This Data?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      window.location.href = link
+                      Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                      )
+                    }
+                  }) 
+
+
+    });
+
+  });
+
+  
+  
 </script>
+// input tinymce
+
+<script src="{{ asset('backend/assets/vendors/tinymce/tinymce.min.js') }}"></script>
+<script src="{{ asset('backend/assets/js/tinymce.js') }}"></script>
+
+// input tinymce
 </body>
 </html>    

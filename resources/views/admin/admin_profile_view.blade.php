@@ -23,6 +23,7 @@
               <label class="tx-11 fw-bolder mb-0 text-uppercase">Name : </label>
               <p class="text-muted">{{$profileData->name}}</p>
             </div>
+            
             <div class="mt-3">
               <label class="tx-11 fw-bolder mb-0 text-uppercase">Email:</label>
               <p class="text-muted">{{$profileData->email}}</p>
@@ -86,7 +87,7 @@
 
                                       <div class="mt-3">
                                         <label class="tx-11 fw-bolder mb-0 text-uppercase">Photo:</label>
-                                        <input class="form-control" id='photo' name="photo" type="file" id="formFile">
+                                        <input class="form-control" id='photo' name="photo" type="file" >
                                       </div>
 
                                       
